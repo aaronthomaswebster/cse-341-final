@@ -8,26 +8,29 @@ let database;
 
 let models = {};
 const userSchema = new Schema({
-    name: String,
-    email: String,
-    password: String
+    _id: {type: mongoose.Schema.Types.ObjectId, auto: true}, 
+    name: {type: String, required: true},
+    email: {type: String, required: true},
+    role: {type: String, enum: ['admin', 'user'], default: 'user'},
+    resume: {type: String, default: null}
 });
 const companySchema = new Schema({
-    name: String,
-    description: String,
-    userId: String
+    name: {type: String, required: true},
+    description: {type: String, required: true},
+    ownerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true}
 });
 
 const jobSchema = new Schema({
-    title: String,
-    description: String,
-    companyId: String
+    title: {type: String, required: true},
+    description: {type: String, required: true},
+    salary: {type: Number, required: true},
+    companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'company', required: true}
 });
 
 const applicationSchema = new Schema({
-    jobId: String,
-    userId: String,
-    status: String
+    jobId: {type: mongoose.Schema.Types.ObjectId, ref: 'job', required: true},
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true},
+    status: {type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending'}
 });
 
 const initDb = async ( callback) => {
