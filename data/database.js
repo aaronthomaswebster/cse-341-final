@@ -3,9 +3,33 @@ dontenv.config();
 
 
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 let database;
 
 let models = {};
+const userSchema = new Schema({
+    name: String,
+    email: String,
+    password: String
+});
+const companySchema = new Schema({
+    name: String,
+    description: String,
+    userId: String
+});
+
+const jobSchema = new Schema({
+    title: String,
+    description: String,
+    companyId: String
+});
+
+const applicationSchema = new Schema({
+    jobId: String,
+    userId: String,
+    status: String
+});
+
 const initDb = async ( callback) => {
     if(database){
         console.warn('Trying to init DB again!');
@@ -13,30 +37,10 @@ const initDb = async ( callback) => {
     }
 
     database = await mongoose.connect(process.env.MONGODB_URL)
-    models['book'] = mongoose.model('book',{
-        book_id: { type: String, unique: true },
-        title: { type: String, required: true },
-        author: { type: String, required: true },
-        isbn: { type: String, unique: true, required: true },
-        published_date: { type: Date, required: true },
-        genre: { type: String, required: true },
-        description: { type: String, required: true },
-        cover_image: { type: String, required: true },
-        pages: { type: Number, required: true },
-        language: { type: String, required: true },
-        publisher: { type: String, required: true },
-        created_at: { type: Date, default: Date.now },
-        updated_at: { type: Date, default: Date.now },
-      });
-    models['review'] = mongoose.model('review',{
-        review_id: { type: String, unique: true },
-        user_name: { type: String, required: true},
-        book_id: {type: mongoose.Schema.Types.ObjectId, ref: 'book'}, // Change 'Item' to the actual referenced collection name, e.g., 'Book'
-        rating: { type: Number, min: 1, max: 5, required: true },
-        comment: { type: String, required: true },
-        created_at: { type: Date, default: Date.now },
-        updated_at: { type: Date, default: Date.now },
-      });
+    models['user'] = database.model('user', userSchema);
+    models['company'] = database.model('company', companySchema);
+    models['job'] = database.model('job', jobSchema);
+    models['application'] = database.model('application', applicationSchema);
     return callback(null, database);
 
 }
