@@ -1,0 +1,72 @@
+[
+        {
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "johndoe@example.com",
+            "favoriteColor": "blue",
+            "birthday": "1990-01-01"
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "email": "janesmith@example.com",
+            "favoriteColor": "green",
+            "birthday": "1995-05-10"
+        },
+        {
+            "firstName": "Alice",
+            "lastName": "Johnson",
+            "email": "alicejohnson@example.com",
+            "favoriteColor": "purple",
+            "birthday": "1988-07-15"
+        },
+        {
+            "firstName": "Bob",
+            "lastName": "Williams",
+            "email": "bobwilliams@example.com",
+            "favoriteColor": "yellow",
+            "birthday": "1992-03-25"
+        },
+        {
+            "firstName": "Emily",
+            "lastName": "Brown",
+            "email": "emilybrown@example.com",
+            "favoriteColor": "pink",
+            "birthday": "1997-11-30"
+        },
+        {
+            "firstName": "Michael",
+            "lastName": "Davis",
+            "email": "michaeldavis@example.com",
+            "favoriteColor": "red",
+            "birthday": "1985-09-05"
+        },
+        {
+            "firstName": "Olivia",
+            "lastName": "Miller",
+            "email": "oliviamiller@example.com",
+            "favoriteColor": "orange",
+            "birthday": "1993-12-20"
+        },
+        {
+            "firstName": "William",
+            "lastName": "Wilson",
+            "email": "williamwilson@example.com",
+            "favoriteColor": "gray",
+            "birthday": "1991-06-08"
+        },
+        {
+            "firstName": "Sophia",
+            "lastName": "Anderson",
+            "email": "sophiaanderson@example.com",
+            "favoriteColor": "brown",
+            "birthday": "1989-04-12"
+        },
+        {
+            "firstName": "James",
+            "lastName": "Taylor",
+            "email": "jamestaylor@example.com",
+            "favoriteColor": "black",
+            "birthday": "1994-02-18"
+        }
+    ]

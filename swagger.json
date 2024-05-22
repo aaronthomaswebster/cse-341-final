@@ -1,0 +1,531 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Users API",
+    "description": "An API for managing your users",
+    "version": "1.0.0"
+  },
+  "host": "cse-341-project2-38d5.onrender.com",
+  "basePath": "/",
+  "schemes": ["https"],
+  "paths": {
+    "/books/": {
+      "get": {
+        "tags": ["books"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/book"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["books"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "title": {
+                  "type": "string",
+                  "required": true
+                },
+                "author": {
+                  "type": "string",
+                  "required": true
+                },
+                "isbn": {
+                  "type": "string",
+                  "unique": true,
+                  "required": true
+                },
+                "published_date": {
+                  "type": "string",
+                  "format": "date",
+                  "required": true
+                },
+                "genre": {
+                  "type": "string",
+                  "required": true
+                },
+                "description": {
+                  "type": "string",
+                  "required": true
+                },
+                "cover_image": {
+                  "type": "string",
+                  "required": true
+                },
+                "pages": {
+                  "type": "number",
+                  "required": true
+                },
+                "language": {
+                  "type": "string",
+                  "required": true
+                },
+                "publisher": {
+                  "type": "string",
+                  "required": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "default": "any"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "default": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "tags": ["books"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/book"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["books"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "book_id": {
+                  "type": "string",
+                  "unique": true
+                },
+                "title": {
+                  "type": "string",
+                  "required": true
+                },
+                "author": {
+                  "type": "string",
+                  "required": true
+                },
+                "isbn": {
+                  "type": "string",
+                  "unique": true,
+                  "required": true
+                },
+                "published_date": {
+                  "type": "string",
+                  "format": "date",
+                  "required": true
+                },
+                "genre": {
+                  "type": "string",
+                  "required": true
+                },
+                "description": {
+                  "type": "string",
+                  "required": true
+                },
+                "cover_image": {
+                  "type": "string",
+                  "required": true
+                },
+                "pages": {
+                  "type": "number",
+                  "required": true
+                },
+                "language": {
+                  "type": "string",
+                  "required": true
+                },
+                "publisher": {
+                  "type": "string",
+                  "required": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "default": "any"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "default": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["books"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/": {
+      "tags": ["reviews"],
+      "get": {
+        "tags": ["reviews"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/review"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["reviews"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_name": {
+                  "type": "string",
+                  "required": true
+                },
+                "book_id": {
+                  "type": "string",
+                  "required": true
+                },
+                "rating": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 5,
+                  "required": true
+                },
+                "comment": {
+                  "type": "string",
+                  "required": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "default": "any"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "default": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": ["reviews"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/review"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["reviews"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "review_id": {
+                "type": "string",
+                "unique": true
+              },
+              "user_name": {
+                "type": "string",
+                "required": true
+              },
+              "book_id": {
+                "type": "string",
+                "required": true
+              },
+              "rating": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 5,
+                "required": true
+              },
+              "comment": {
+                "type": "string",
+                "required": true
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "default": "any"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "default": "any"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["reviews"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "book": {
+      "type": "object",
+      "properties": {
+        "book_id": {
+          "type": "string",
+          "unique": true
+        },
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "author": {
+          "type": "string",
+          "required": true
+        },
+        "isbn": {
+          "type": "string",
+          "unique": true,
+          "required": true
+        },
+        "published_date": {
+          "type": "string",
+          "format": "date",
+          "required": true
+        },
+        "genre": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": true
+        },
+        "cover_image": {
+          "type": "string",
+          "required": true
+        },
+        "pages": {
+          "type": "number",
+          "required": true
+        },
+        "language": {
+          "type": "string",
+          "required": true
+        },
+        "publisher": {
+          "type": "string",
+          "required": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "default": "any"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "default": "any"
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "review_id": {
+          "type": "string",
+          "unique": true
+        },
+        "user_name": {
+          "type": "string",
+          "required": true
+        },
+        "book_id": {
+          "type": "string",
+          "required": true
+        },
+        "rating": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 5,
+          "required": true
+        },
+        "comment": {
+          "type": "string",
+          "required": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "default": "any"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "default": "any"
+        }
+      }
+    }
+  }
+}
