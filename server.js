@@ -13,7 +13,6 @@ app.use(bodyParser.json());
 app
   .use(
     session({
-      secret: "secret",
       secret:
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15),
@@ -35,8 +34,11 @@ app
     );
     next();
   })
-  .use(cors({ methods: "GET,POST,PUT,DELETE,UPDATE,PATCH,OPTIONS" }))
-  .use(cors({ origin: "*" }))
+  .use(cors({ 
+    methods: "GET,POST,PUT,DELETE,UPDATE,PATCH,OPTIONS" ,
+    origin: ['http://localhost:3000', 'https://github.com', '*'],
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, z-key'
+  }))
   .use("/", require("./routes"));
 
 passport.use(
