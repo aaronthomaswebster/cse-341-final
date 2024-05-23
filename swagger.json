@@ -13,7 +13,8 @@
   "paths": {
     "/user/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Users Endpoint"],
+        "description": "Retrieves a user by their ID",
         "parameters": [
           {
             "name": "id",
@@ -32,7 +33,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Users Endpoint"],
+        "description": "Updates a user by their ID",
         "parameters": [
           {
             "name": "id",
@@ -56,7 +58,8 @@
     },
     "/company/": {
       "get": {
-        "description": "",
+        "tags": ["Company Endpoint"],
+        "description": "Retrieves all companies in Database",
         "responses": {
           "200": {
             "description": "OK"
@@ -67,7 +70,8 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Company Endpoint"],
+        "description": "Creates a company under your profile(Must be an admin user)",
         "responses": {
           "200": {
             "description": "OK"
@@ -83,7 +87,8 @@
     },
     "/company/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Company Endpoint"],
+        "description": "Retrieves a company by it's ID",
         "parameters": [
           {
             "name": "id",
@@ -102,7 +107,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Company Endpoint"],
+        "description": "Updates a company by it's ID(must be the owner of the company)",
         "parameters": [
           {
             "name": "id",
@@ -124,7 +130,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Company Endpoint"],
+        "description": "Deletes a company by it's ID(must be the owner of the company)",
         "parameters": [
           {
             "name": "id",
@@ -148,7 +155,8 @@
     },
     "/job/": {
       "get": {
-        "description": "",
+        "tags": ["Jobs Endpoint"],
+        "description": "Retrieves all jobs in the database",
         "responses": {
           "200": {
             "description": "OK"
@@ -159,7 +167,8 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Jobs Endpoint"],
+        "description": "Creates a job under your company(must be an admin user)",
         "responses": {
           "200": {
             "description": "OK"
@@ -175,7 +184,8 @@
     },
     "/job/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Jobs Endpoint"],
+        "description": "Retrieves a job by it's ID",
         "parameters": [
           {
             "name": "id",
@@ -194,7 +204,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Jobs Endpoint"],
+        "description": "Update a job by it's ID(must be owner of the company)",
         "parameters": [
           {
             "name": "id",
@@ -216,7 +227,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Jobs Endpoint"],
+        "description": "Update a job by it's ID(must be owner of the company)",
         "parameters": [
           {
             "name": "id",
@@ -240,7 +252,8 @@
     },
     "/application/byjobId/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Applications Endpoint"],
+        "description": "Retrieves all applications under the job ID(must be company owner)",
         "parameters": [
           {
             "name": "id",
@@ -261,7 +274,8 @@
     },
     "/application/filterbystatus/{status}": {
       "get": {
-        "description": "",
+        "tags": ["Applications Endpoint"],
+        "description": "Returns a filtered list of applications under the specified status(User and Admin can use)",
         "parameters": [
           {
             "name": "status",
@@ -282,7 +296,8 @@
     },
     "/application/": {
       "post": {
-        "description": "",
+        "tags": ["Applications Endpoint"],
+        "description": "Creates an application for a specific Job",
         "responses": {
           "200": {
             "description": "OK"
@@ -298,7 +313,8 @@
     },
     "/application/{id}": {
       "put": {
-        "description": "",
+        "tags": ["Applications Endpoint"],
+        "description": "Update the status of the application by it's ID(must be Job/Company Owner)",
         "parameters": [
           {
             "name": "id",
@@ -320,7 +336,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Applications Endpoint"],
+        "description": "Can delete an application by it's ID(must be user, admin cannot delete)",
         "parameters": [
           {
             "name": "id",
