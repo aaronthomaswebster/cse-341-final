@@ -12,7 +12,7 @@ const userSchema = new Schema({
     name: {type: String, required: [true, "Name Required"]},
     phone: {type: String, match: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/},
     passport_user_id: {type: String, required: [true, "Passport User ID Required"]},
-    email: {type: String, required: [true, "Email Required"], match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,},
+    email: {type: String, match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,},
     role: {type: String, enum: ['admin', 'user'], default: 'user'},
     resume: {type: String, default: null}
 });

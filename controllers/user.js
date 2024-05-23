@@ -26,10 +26,11 @@ const getUserByPassportId = async (passport_user_id) => {
 
 const createUser = async (user) => {
   try {    
+
     model().create({
       name: user.displayName,
       passport_user_id: user.id,
-      email: user.emails[0].value,
+      email: user.emails ? user.emails[0].value : null,
       resume: user.resume
     });
   } catch (error) {

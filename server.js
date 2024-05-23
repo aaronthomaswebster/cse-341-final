@@ -67,7 +67,7 @@ passport.deserializeUser((obj, done) => {
 
 app.get("/", async (req, res) => {
   if (req.session.user !== undefined) {
-
+    console.log(req.session.user)
     // get the user from the database,
     // if the user is not found, insert a new user
     let user = await userController.getUserByPassportId(req.session.user.id);
