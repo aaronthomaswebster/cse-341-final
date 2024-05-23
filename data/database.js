@@ -17,19 +17,19 @@ const userSchema = new Schema({
 const companySchema = new Schema({
     name: {type: String, required: [true, "Company Name Required"]},
     description: {type: String, required: [true, "Company Description Required"]},
-    ownerId: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: [true, "Owner ID Required"]}
+    ownerId: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: [true, "Owner ID Required"]}
 });
 
 const jobSchema = new Schema({
     title: {type: String, required: [true, "Job Title Required"]},
     description: {type: String, required: [true, "Job Description Required"]},
     salary: {type: Number, required: [true, "Salary Required"]},
-    companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'company', required: [true, "Company ID Required"]}
+    companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'companies', required: [true, "Company ID Required"]}
 });
 
 const applicationSchema = new Schema({
-    jobId: {type: mongoose.Schema.Types.ObjectId, ref: 'job', required: [true, "Job ID Required"]},
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'user', required: [true, "User ID Required"]},
+    jobId: {type: mongoose.Schema.Types.ObjectId, ref: 'jobs', required: [true, "Job ID Required"]},
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: [true, "User ID Required"]},
     status: {type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending'}
 });
 
