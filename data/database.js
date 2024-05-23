@@ -40,10 +40,10 @@ const initDb = async ( callback) => {
     }
 
     database = await mongoose.connect(process.env.MONGODB_URL)
-    models['user'] = database.model('user', userSchema);
-    models['company'] = database.model('company', companySchema);
-    models['job'] = database.model('job', jobSchema);
-    models['application'] = database.model('application', applicationSchema);
+    models['user'] = database.model('users', userSchema);
+    models['company'] = database.model('companies', companySchema);
+    models['job'] = database.model('jobs', jobSchema);
+    models['application'] = database.model('applications', applicationSchema);
     return callback(null, database);
 
 }
