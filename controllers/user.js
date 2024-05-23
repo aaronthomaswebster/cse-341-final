@@ -33,7 +33,7 @@ const createUser = async (user) => {
       resume: user.resume
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.log({error})
   }
 };
 
