@@ -5,6 +5,7 @@ const passport = require("passport");
 const session = require("express-session");
 const GitHubStrategy = require("passport-github2").Strategy;
 const cors = require("cors");
+const userController = require("./controllers/user.js");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -34,11 +35,13 @@ app
     );
     next();
   })
-  .use(cors({ 
-    methods: "GET,POST,PUT,DELETE,UPDATE,PATCH,OPTIONS" ,
-    origin: ['http://localhost:3000', 'https://github.com', '*'],
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, z-key'
-  }))
+  .use(
+    cors({
+      methods: "GET,POST,PUT,DELETE,UPDATE,PATCH,OPTIONS",
+      origin: ["http://localhost:3000", "https://github.com", "*"],
+      allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, z-key",
+    })
+  )
   .use("/", require("./routes"));
 
 passport.use(
@@ -62,8 +65,26 @@ passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 
-app.get("/", (req, res) => {
-  console.log(req.session.user)
+app.get("/", async (req, res) => {
+  if (req.session.user !== undefined) {
+
+    // get the user from the database,
+    // if the user is not found, insert a new user
+    let user = await userController.getUserByPassportId(req.session.user.id);
+    console.log({user})
+    console.log('user is null', user == null)
+    console.log('user is empty', user == [])
+    console.log('user is undefined', user == undefined)
+    console.log('user: ', typeof(user))
+    console.log(JSON.stringify(user, null, 4));
+    if (user == null || user == [] || user.length == 0 || user == undefined) {
+      console.log("User not found, creating new user")
+      user = await userController.createUser(req.session.user);
+      console.log("User created")
+      console.log({user})
+    }
+  }
+
   res.send(
     req.session.user !== undefined
       ? "logged in as " + req.session.user.username
@@ -72,12 +93,15 @@ app.get("/", (req, res) => {
 });
 app.get(
   "/github/callback",
-  passport.authenticate("github", { 
-    failureRedirect: '/api-docs', session: false}),
-    (req, res) =>{
-      req.session.user = req.user;res.redirect('/');
-    }
-  );
+  passport.authenticate("github", {
+    failureRedirect: "/api-docs",
+    session: false,
+  }),
+  (req, res) => {
+    req.session.user = req.user;
+    res.redirect("/");
+  }
+);
 process.on("uncaughtException", (err) => {
   console.log(process.stderr.fd, "Uncaught Exception: ", err);
 });

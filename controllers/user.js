@@ -1,18 +1,37 @@
 const { getModel } = require("../data/database");
 
-const model =() => getModel("book");
+const model =() => getModel("user");
 
 const getUser = async (req, res) => {
   try {    
-    res.status(200).json({ message: "function getUser" });
+    let user = await model().find({_id: req.params.id});
+    if(user.length == 0) {
+      return res.status(404).json({ message: "User not found" });
+    } 
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-const createUser = async (req, res) => {
+const getUserByPassportId = async (passport_user_id) => {
   try {    
-    res.status(200).json({ message: "function createUser" });
+    let user = await model().find({passport_user_id: passport_user_id});
+    return user;
+  } catch (error) {
+    return false;
+  }
+}
+
+
+const createUser = async (user) => {
+  try {    
+    model().create({
+      name: user.displayName,
+      passport_user_id: user.id,
+      email: user.emails[0].value,
+      resume: user.resume
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -38,6 +57,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getUser,
+  getUserByPassportId,
   createUser,
   updateUser,
   deleteUser,
