@@ -11,18 +11,10 @@
     "https"
   ],
   "paths": {
-    "/user/{id}": {
+    "/user/": {
       "get": {
         "tags": ["Users Endpoint"],
-        "description": "Retrieves a user by their ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "description": "Retrieves an authenticated user by their passport ID",
         "responses": {
           "200": {
             "description": "OK",
