@@ -5,10 +5,10 @@
     "description": "An API for managing your users",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse-341-final-yegu.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/user/{id}": {
@@ -26,6 +26,29 @@
         "responses": {
           "200": {
             "description": "OK"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "passport_user_id": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "resume": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -41,6 +64,41 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "required": [true, "Name Required"]
+                },
+                "phone": {
+                  "type": "string",
+                  "match": "^[0-9]{3}-[0-9]{3}-[0-9]{4}$"
+                },
+                "passport_user_id": {
+                  "type": "string",
+                  "required": [true, "Passport User ID Required"]
+                },
+                "email": {
+                  "type": "string",
+                  "match": "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["admin", "user"],
+                  "default": "user"
+                },
+                "resume": {
+                  "type": "string",
+                  "default": null
+                }
+              }
+            }
           }
         ],
         "responses": {
