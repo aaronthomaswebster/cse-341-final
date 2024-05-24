@@ -33,7 +33,7 @@ const createCompany = async (req, res) => {
 const updateCompany = async (req, res) => {
   try {
     const getCompanyOwner = await model.findById(req.params.id)
-    const getPassportID = await getUserByPassportId();
+    const getPassportID = await getUserByPassportId(req.session.user.id);
     if(getPassportID.id == getCompanyOwner.ownerId){
       const update = await model.findByIdAndUpdate(getCompanyOwner, req.body)
       res.status(200).json(update);
@@ -49,7 +49,7 @@ const updateCompany = async (req, res) => {
 const deleteCompany = async (req, res) => {
   try {    
     const getCompanyOwner = await model.findById(req.params.id)
-    const getPassportID = await getUserByPassportId();
+    const getPassportID = await getUserByPassportId(req.session.user.id);
     if(getPassportID.id == getCompanyOwner.ownerId){
       const deletion = await model.findByIdAndDelete(getCompanyOwner)
       res.status(200).json(deletion);

@@ -4,7 +4,8 @@ const model =() => getModel("user");
 
 const getUser = async (req, res) => {
   try {    
-    let user = await model().find({_id: req.params.id});
+    let passport_user_id = req.session.user.id;
+    let user = await getUserByPassportId(passport_user_id);
     if(user.length == 0) {
       return res.status(404).json({ message: "User not found" });
     } 
