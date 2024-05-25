@@ -43,8 +43,7 @@ const updateUser = async (req, res) => {
   try {    
     let passport_user_id = req.session.user.id;
     let tmpUser = await getUserByPassportId(passport_user_id);
-    req.body['_id'] = tmpUser[0]['_id'];
-    await model().updateOne({passport_user_id: passport_user_id}, req.body);
+    await model().findByIdAndUpdate( tmpUser[0].id, req.body);
     res.status(200).json({ message: "User updated" });
   } catch (error) {
     res.status(500).json({ message: error.message });
