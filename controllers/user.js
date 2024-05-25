@@ -43,7 +43,8 @@ const updateUser = async (req, res) => {
   try {    
     let passport_user_id = req.session.user.id;
     let tmpUser = await getUserByPassportId(passport_user_id);
-    await model().findOneAndUpdate( {id :tmpUser[0].id}, req.body);
+    const response = await model().findOneAndUpdate( {id :tmpUser[0].id}, req.body);
+    console.log({response})
     res.status(200).json({ message: "User updated" });
   } catch (error) {
     res.status(500).json({ message: error.message });

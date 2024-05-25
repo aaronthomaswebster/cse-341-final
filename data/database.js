@@ -7,10 +7,6 @@ const { Schema } = mongoose;
 let database;
 
 let models = {};
-var validateEmail = function(email) {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
-};
 const userSchema = new Schema({
     _id: {type: mongoose.Schema.Types.ObjectId, auto: true}, 
     name: {type: String, required: [true, "Name Required"]},
@@ -21,9 +17,7 @@ const userSchema = new Schema({
         trim: true,
         lowercase: true,
         unique: true,
-        required: 'Email address is required',
-        validate: [validateEmail, 'Please fill a valid email address'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+        match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please fill a valid email address']
       },
     role: {type: String, enum: ['admin', 'user'], default: 'user'},
     resume: {type: String, default: null}
@@ -46,11 +40,6 @@ const applicationSchema = new Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: [true, "User ID Required"]},
     status: {type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending'}
 }, {versionKey: false});
-
-var validateEmail = function(email) {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
-};
 
 const initDb = async ( callback) => {
     if(database){
