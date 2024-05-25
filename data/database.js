@@ -7,6 +7,10 @@ const { Schema } = mongoose;
 let database;
 
 let models = {};
+var validateEmail = function(email) {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
 const userSchema = new Schema({
     _id: {type: mongoose.Schema.Types.ObjectId, auto: true}, 
     name: {type: String, required: [true, "Name Required"]},
@@ -14,8 +18,12 @@ const userSchema = new Schema({
     passport_user_id: {type: String, required: [true, "Passport User ID Required"]},
     email: {
         type: String,
-        required: [true, "Email Required"],
-        match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        required: 'Email address is required',
+        validate: [validateEmail, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
       },
     role: {type: String, enum: ['admin', 'user'], default: 'user'},
     resume: {type: String, default: null}
