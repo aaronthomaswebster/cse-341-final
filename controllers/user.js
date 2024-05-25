@@ -56,6 +56,7 @@ const deleteUser = async (req, res) => {
   try {    
     let passport_user_id = req.session.user.id;
     await model().deleteOne({passport_user_id: passport_user_id});
+    req.session.destroy();
     res.status(200).json({ message: "User deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
