@@ -110,6 +110,7 @@
             "description": "Internal Server Error"
           }
         }
+      }
     },
     "/company/": {
       "get": {
