@@ -12,7 +12,11 @@ const userSchema = new Schema({
     name: {type: String, required: [true, "Name Required"]},
     phone: {type: String, match: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/},
     passport_user_id: {type: String, required: [true, "Passport User ID Required"]},
-    email: {type: String, match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/},
+    email: {
+        type: String,
+        required: [true, "Email Required"],
+        match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      },
     role: {type: String, enum: ['admin', 'user'], default: 'user'},
     resume: {type: String, default: null}
 }, {versionKey: false});
@@ -34,6 +38,11 @@ const applicationSchema = new Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: [true, "User ID Required"]},
     status: {type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending'}
 }, {versionKey: false});
+
+var validateEmail = function(email) {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
 
 const initDb = async ( callback) => {
     if(database){
