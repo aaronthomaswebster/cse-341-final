@@ -42,7 +42,11 @@ const createUser = async (user) => {
 const updateUser = async (req, res) => {
   try {    
     let passport_user_id = req.session.user.id;
-    const response = await model().findOneAndUpdate( {passport_user_id: passport_user_id}, req.body);
+    const user = await getUserByPassportId(passport_user_id);
+    if(user.length == 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const response = await model().updateOne({passport_user_id: passport_user_id}, req.body, { runValidators: true });
     console.log({response})
     res.status(200).json({ message: "User updated" });
   } catch (error) {
