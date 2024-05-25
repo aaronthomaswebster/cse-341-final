@@ -42,7 +42,8 @@ const createUser = async (user) => {
 const updateUser = async (req, res) => {
   try {    
     let passport_user_id = req.session.user.id;
-    let tmpUser = getUserByPassportId(passport_user_id);
+    let tmpUser = await getUserByPassportId(passport_user_id);
+    console.log({tmpUser})
     req.body['_id'] = tmpUser[0]['_id'];
     await model().updateOne({passport_user_id: passport_user_id}, req.body);
     res.status(200).json({ message: "User updated" });
