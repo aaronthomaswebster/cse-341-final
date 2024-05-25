@@ -15,25 +15,25 @@ const userSchema = new Schema({
     email: {type: String, match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,},
     role: {type: String, enum: ['admin', 'user'], default: 'user'},
     resume: {type: String, default: null}
-});
+}, {versionKey: false});
 const companySchema = new Schema({
     name: {type: String, required: [true, "Company Name Required"]},
     description: {type: String, required: [true, "Company Description Required"]},
     ownerId: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: [true, "Owner ID Required"]}
-});
+}, {versionKey: false});
 
 const jobSchema = new Schema({
     title: {type: String, required: [true, "Job Title Required"]},
     description: {type: String, required: [true, "Job Description Required"]},
     salary: {type: Number, required: [true, "Salary Required"]},
     companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'companies', required: [true, "Company ID Required"]}
-});
+}, {versionKey: false});
 
 const applicationSchema = new Schema({
     jobId: {type: mongoose.Schema.Types.ObjectId, ref: 'jobs', required: [true, "Job ID Required"]},
     userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: [true, "User ID Required"]},
     status: {type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending'}
-});
+}, {versionKey: false});
 
 const initDb = async ( callback) => {
     if(database){
