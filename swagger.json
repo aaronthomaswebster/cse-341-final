@@ -11,28 +11,6 @@
     "https"
   ],
   "paths": {    
-    "/login": {
-      "get": {
-        "tags": ["Authentication"],
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/logout": {
-      "get": {
-        "tags": ["Authentication"],
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/user/": {
       "get": {
         "tags": ["Users Endpoint"],
