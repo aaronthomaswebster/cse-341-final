@@ -67,21 +67,13 @@ passport.deserializeUser((obj, done) => {
 
 app.get("/", async (req, res) => {
   if (req.session.user !== undefined) {
-    console.log(req.session.user)
     // get the user from the database,
     // if the user is not found, insert a new user
     let user = await userController.getUserByPassportId(req.session.user.id);
-    console.log({user})
-    console.log('user is null', user == null)
-    console.log('user is empty', user == [])
-    console.log('user is undefined', user == undefined)
-    console.log('user: ', typeof(user))
-    console.log(JSON.stringify(user, null, 4));
     if (user == null || user == [] || user.length == 0 || user == undefined) {
       console.log("User not found, creating new user")
       user = await userController.createUser(req.session.user);
       console.log("User created")
-      console.log({user})
     }
   }
 
