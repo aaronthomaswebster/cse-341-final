@@ -340,7 +340,32 @@
         "description": "Retrieves all jobs in the database",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "required": [true, "Job Title Required"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "required": [true, "Job Description Required"]
+                  },
+                  "salary": {
+                    "type": "number",
+                    "required": [true, "Salary Required"]
+                  },
+                  "companyId": {
+                    "type": "string",
+                    "required": [true, "Company ID Required"]
+                  }
+                }
+              }
+            }
+            
           },
           "500": {
             "description": "Internal Server Error"
@@ -350,6 +375,34 @@
       "post": {
         "tags": ["Jobs Endpoint"],
         "description": "Creates a job under your company(must be an admin user)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "required": [true, "Job Title Required"]
+                },
+                "description": {
+                  "type": "string",
+                  "required": [true, "Job Description Required"]
+                },
+                "salary": {
+                  "type": "number",
+                  "required": [true, "Salary Required"]
+                },
+                "companyId": {
+                  "type": "string",
+                  "required": [true, "Company ID Required"]
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -377,7 +430,28 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "required": [true, "Job Title Required"]
+                },
+                "description": {
+                  "type": "string",
+                  "required": [true, "Job Description Required"]
+                },
+                "salary": {
+                  "type": "number",
+                  "required": [true, "Salary Required"]
+                },
+                "companyId": {
+                  "type": "string",
+                  "required": [true, "Company ID Required"]
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -393,6 +467,32 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "required": [true, "Job Title Required"]
+                },
+                "description": {
+                  "type": "string",
+                  "required": [true, "Job Description Required"]
+                },
+                "salary": {
+                  "type": "number",
+                  "required": [true, "Salary Required"]
+                },
+                "companyId": {
+                  "type": "string",
+                  "required": [true, "Company ID Required"]
+                }
+              }
+            }
           }
         ],
         "responses": {

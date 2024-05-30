@@ -1,6 +1,7 @@
 const { getModel } = require("../data/database");
 
 const model =() => getModel("job");
+const companyModel =() => getModel("company");
 
 const getAllJobs = async (req, res) => {
   try {    
@@ -21,7 +22,14 @@ const getJobById = async (req, res) => {
 
 const createJob = async (req, res) => {
   try {    
-    let job = await model().create(req.body).populate('companyId').exec();
+    const company = await companyModel().findById(req.body.companyId).populate('ownerId').exec();
+    if(!company || company.length == 0){
+      return res.status(400).json({ message: 'Company does not exist'});
+    }else if(company.ownerId.passport_user_id != req.session.user.id){
+      return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company to create a job'});
+    }
+    let job = await model().create(req.body);
+    job = await model().findById(job._id).populate('companyId').exec();
     res.status(200).json(job);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -30,8 +38,28 @@ const createJob = async (req, res) => {
 
 const updateJob = async (req, res) => {
   try {    
-    let job = await model().updateOne({_id: req.params.id}, req.body).populate('companyId').exec();
-    res.status(200).json(job);
+    const job = await model().findById(req.params.id).populate('companyId').exec();
+    console.log({req})
+    console.log({job})
+    if(!job || job.length == 0){
+      return res.status(400).json({ message: 'Job does not exist'});
+    }
+    const company = await companyModel().findById(req.body.companyId).populate('ownerId').exec();
+    if(company.ownerId.passport_user_id != req.session.user.id){
+      return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company to update this job'});
+    }
+
+    if(req.body.companyId != job.companyId._id){
+      const newCompany = await companyModel().findById(req.body.companyId).populate('ownerId').exec();
+      if(!company || company.length == 0){
+        return res.status(400).json({ message: 'Company does not exist'});
+      }else if(company.ownerId.passport_user_id != req.session.user.id){
+        return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company to set it as the company for a job'});
+      }
+    }
+
+    const update = await model().findByIdAndUpdate({_id: req.params.id}, req.body)
+    res.status(200).json(update);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -39,6 +67,15 @@ const updateJob = async (req, res) => {
 
 const deleteJob = async (req, res) => {
   try {    
+    const jobToDelete = await model().findById(req.params.id).populate('companyId').exec();
+    if(!jobToDelete || jobToDelete.length == 0){
+      return res.status(400).json({ message: 'Job does not exist'});
+    }
+    const company = await companyModel().findById(jobToDelete[0].companyId).populate('ownerId').exec();
+    if(company.ownerId.passport_user_id != req.session.user.id){
+      return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company associated with a job inorder to delte it'});
+    }
+
     let job = await model().deleteOne({_id: req.params.id});
     res.status(200).json({ message: "Job deleted" });
   } catch (error) {
