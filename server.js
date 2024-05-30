@@ -9,6 +9,7 @@ const userController = require("./controllers/user.js");
 
 const app = express();
 const port = process.env.PORT || 3000;
+let server;
 
 app.use(bodyParser.json());
 app
@@ -103,8 +104,14 @@ mongodb.initDb((err) => {
     console.log("Error connecting to MongoDB");
     process.exit(1);
   } else {
-    app.listen(port, () => {
+    server = app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
   }
 });
+
+app.closeServer = () => {
+  server.close();
+};
+
+module.exports = app
