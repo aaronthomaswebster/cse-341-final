@@ -40,7 +40,7 @@ const getApplicationByJobId = async (req, res) => {
     if(applicationList.length == 0) {
       return res.status(404).json({ message: "No Applications found for given job Id" });
     }
-    if(applicationList[0].jobId.ownerId.passport_user_id != req.session.user.id) {
+    if(applicationList[0].jobId.companyId.ownerId.passport_user_id != req.session.user.id) {
       return res.status(401).json({ message: "Unauthorized: you must be the owner of the job to view it's applications" });
     }
     res.status(200).json(applicationList);
@@ -111,7 +111,6 @@ const filterByStatus = async (req, res) => {
 
 const createApplication = async (req, res) => {
   try {    
-    // let job = await jobController().findById(req.body.jobId).populate('companyId').exec();
     let job = await jobController().findById(req.body.jobId).populate([
       {path: 'companyId',
       populate: {path: 'ownerId', model: 'users'}}]).exec();
