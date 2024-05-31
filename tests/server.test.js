@@ -133,3 +133,37 @@ describe("GET /company/:id", () => {
     });
   });
 });
+
+
+describe("GET /user", () => {
+  it("should return all applications", async () => {
+    const response = await request(app).get("/user");
+    expect(response.status).toBe(401);
+  });
+});
+
+describe("GET /application", () => {
+  it("should return all applications", async () => {
+    const response = await request(app).get("/application");
+    expect(response.status).toBe(401);
+  });
+});
+describe("GET /application/id", () => {
+  it("should return all applications", async () => {
+    const response = await request(app).get("/application/1234");
+    expect(response.status).toBe(401);
+  });
+});
+describe("GET /application/byjobId/id", () => {
+  it("should return all applications", async () => {
+    const response = await request(app).get("/application/byjobId/1234");
+    expect(response.status).toBe(401);
+  });
+});
+
+describe("GET /application/filterbystatus/:status", () => {
+  it("should return all applications", async () => {
+    const response = await request(app).get("/application/filterbystatus/pending");
+    expect(response.status).toBe(401);
+  });
+});

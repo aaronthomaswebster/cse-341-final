@@ -1,6 +1,9 @@
 const { getModel } = require("../data/database");
 
 const model =() => getModel("user");
+const companyModel =() => getModel("company");
+const applicationModel =() => getModel("application");
+const jobModel =() => getModel("job");
 
 const getUser = async (req, res) => {
   try {    
@@ -57,7 +60,22 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {    
+
     let passport_user_id = req.session.user.id;
+    let user = await getUserByPassportId(passport_user_id);
+
+    let companies = await companyModel().find({ownerId: user[0].id});
+    console.log({companies})
+    for(let i = 0; i < companies.length; i++){
+      let jobs = await jobModel().find({companyId: companies[i].id});
+      console.log({jobs})
+      for(let j = 0; j < jobs.length; j++){
+        await applicationModel().deleteMany({jobId: jobs[j].id});
+      }
+      await jobModel().deleteMany({companyId: companies[i].id})
+    }
+    await companyModel().deleteMany({ownerId: user[0].id});
+    await applicationModel().deleteMany({userId: user[0].id});
     await model().deleteOne({passport_user_id: passport_user_id});
     req.session.destroy();
     res.status(200).json({ message: "User deleted" });

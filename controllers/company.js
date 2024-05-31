@@ -2,6 +2,8 @@ const { getModel } = require("../data/database");
 const { getUserByPassportId } = require('./user.js');
 
 const model =() => getModel("company");
+const jobModel =() => getModel("job");
+const applicationModel =() => getModel("application");
 
 const getCompanyById = async (req, res) => {
   try {    
@@ -65,8 +67,15 @@ const deleteCompany = async (req, res) => {
     const currentCompanyData = await model().findById(req.params.id);
     const ownerId = currentCompanyData.ownerId;
     const getPassportID = await getUserByPassportId(req.session.user.id);
-    if(getPassportID[0].id == ownerId.toString()){
-      const deletion = await model().findByIdAndDelete(req.params.id)
+    if(getPassportID[0].id == ownerId.toString()){     
+        console.log({companies})
+        let jobs = await jobModel().find({companyId: req.params.id});
+        console.log({jobs})
+        for(let j = 0; j < jobs.length; j++){
+          await applicationModel().deleteMany({jobId: jobs[j].id});
+        }
+        await jobModel().deleteMany({companyId: req.params.id});
+        const deletion = await model().findByIdAndDelete(req.params.id)
       res.status(200).json({message: 'Company successfully deleted'});
     }else{
       res.status(400).json({ message: 'Unauthorized: you must be the owner of the company to update this company'});

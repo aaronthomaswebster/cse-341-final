@@ -531,54 +531,61 @@
         }
       }
     },
-    "/application/byjobId/{id}": {
-      "get": {
-        "tags": ["Applications Endpoint"],
-        "description": "Retrieves all applications under the job ID(must be company owner)",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/application/filterbystatus/{status}": {
-      "get": {
-        "tags": ["Applications Endpoint"],
-        "description": "Returns a filtered list of applications under the specified status(User and Admin can use)",
-        "parameters": [
-          {
-            "name": "status",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/application/": {
+      "get": {
+        "tags": ["Applications Endpoint"],
+        "description": "gets all of your applications and all applications for all jobs under your company(must be company owner or user)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string",
+                    "required": [true, "Job ID Required"]
+                  },
+                  "userId": {
+                    "type": "string",
+                    "required": [true, "User ID Required"]
+                  },
+                  "status": {
+                    "type": "string",
+                    "required": [true, "Status Required"]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },      
       "post": {
         "tags": ["Applications Endpoint"],
         "description": "Creates an application for a specific Job",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "jobId": {
+                  "type": "string",
+                  "required": [true, "Job ID Required"]
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -593,6 +600,46 @@
       }
     },
     "/application/{id}": {
+      "get": {
+        "tags": ["Applications Endpoint"],
+        "description": "Update the status of the application by it's ID(must be Job/Company Owner)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string",
+                    "required": [true, "Job ID Required"]
+                  },
+                  "userId": {
+                    "type": "string",
+                    "required": [true, "User ID Required"]
+                  },
+                  "status": {
+                    "type": "string",
+                    "required": [true, "Status Required"]
+                  }
+                }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "put": {
         "tags": ["Applications Endpoint"],
         "description": "Update the status of the application by it's ID(must be Job/Company Owner)",
@@ -606,7 +653,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string",
+                    "required": [true, "Job ID Required"]
+                  },
+                  "userId": {
+                    "type": "string",
+                    "required": [true, "User ID Required"]
+                  },
+                  "status": {
+                    "type": "string",
+                    "required": [true, "Status Required"]
+                  }
+                }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -633,6 +697,90 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/application/byjobId/{id}": {
+      "get": {
+        "tags": ["Applications Endpoint"],
+        "description": "Retrieves all applications under the job ID(must be company owner)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string",
+                    "required": [true, "Job ID Required"]
+                  },
+                  "userId": {
+                    "type": "string",
+                    "required": [true, "User ID Required"]
+                  },
+                  "status": {
+                    "type": "string",
+                    "required": [true, "Status Required"]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/application/filterbystatus/{status}": {
+      "get": {
+        "tags": ["Applications Endpoint"],
+        "description": "Returns a filtered list of applications under the specified status(User and Admin can use)",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string",
+                    "required": [true, "Job ID Required"]
+                  },
+                  "userId": {
+                    "type": "string",
+                    "required": [true, "User ID Required"]
+                  },
+                  "status": {
+                    "type": "string",
+                    "required": [true, "Status Required"]
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"

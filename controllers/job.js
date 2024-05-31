@@ -2,6 +2,7 @@ const { getModel } = require("../data/database");
 
 const model =() => getModel("job");
 const companyModel =() => getModel("company");
+const applicationModel =() => getModel("application");
 
 const getAllJobs = async (req, res) => {
   try {    
@@ -75,7 +76,7 @@ const deleteJob = async (req, res) => {
     if(company.ownerId.passport_user_id != req.session.user.id){
       return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company associated with a job inorder to delte it'});
     }
-
+    await applicationModel().deleteMany({jobId:  req.params.id});
     let job = await model().deleteOne({_id: req.params.id});
     res.status(200).json({ message: "Job deleted" });
   } catch (error) {
