@@ -57,7 +57,8 @@ const updateJob = async (req, res) => {
       }
     }
 
-    const update = await model().findByIdAndUpdate({_id: req.params.id}, req.body)
+    await model().findByIdAndUpdate({_id: req.params.id}, req.body)
+    const update = await model().findById(req.params.id).populate('companyId').exec();
     res.status(200).json(update);
   } catch (error) {
     res.status(500).json({ message: error.message });
