@@ -86,7 +86,7 @@ const filterByStatus = async (req, res) => {
     allApplicationList.forEach(filter => {
       if(filter.userId.passport_user_id == req.session.user.id){
         userFilteredList.push(filter);
-      }else if(filter.jobId.ownerId.passport_user_id == req.session.user.id){
+      }else if(filter.jobId.companyId.ownerId.passport_user_id == req.session.user.id){
         userFilteredList.push(filter);
       }
     });
