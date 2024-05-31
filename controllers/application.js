@@ -143,7 +143,12 @@ const updateApplication = async (req, res) => {
     if(application.jobId.companyId.ownerId.passport_user_id != req.session.user.id){
       return res.status(401).json({message: "Unauthorized: You must be the owner of the job to update the status of this application."});
     }
-    let updatedApplication = await model().findByIdAndUpdate(application._id, {status: req.body.status});
+    await model().findByIdAndUpdate(application._id, {status: req.body.status});
+    let updatedApplication = await model().findById(req.params.id).populate([
+      {path: 'userId'},
+      {path: 'jobId',
+        populate: {path: 'companyId', model: 'companies', 
+          populate: {path: 'ownerId', model: 'users'}}}]).exec();
     res.status(200).json(updatedApplication);
   } catch (error) {
     res.status(500).json({ message: error.message });
