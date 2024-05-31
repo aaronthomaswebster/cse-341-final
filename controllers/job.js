@@ -40,17 +40,15 @@ const createJob = async (req, res) => {
 const updateJob = async (req, res) => {
   try {    
     const job = await model().findById(req.params.id).populate('companyId').exec();
-    console.log({req})
-    console.log({job})
     if(!job || job.length == 0){
       return res.status(400).json({ message: 'Job does not exist'});
     }
-    const company = await companyModel().findById(req.body.companyId).populate('ownerId').exec();
+    const company = await companyModel().findById(job.companyId).populate('ownerId').exec();
     if(company.ownerId.passport_user_id != req.session.user.id){
       return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company to update this job'});
     }
 
-    if(req.body.companyId != job.companyId._id){
+    if(req.body.companyId != job.companyId._id && req.body.companyId != null){
       const newCompany = await companyModel().findById(req.body.companyId).populate('ownerId').exec();
       if(!company || company.length == 0){
         return res.status(400).json({ message: 'Company does not exist'});
