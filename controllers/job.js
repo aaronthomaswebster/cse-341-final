@@ -67,10 +67,10 @@ const updateJob = async (req, res) => {
 const deleteJob = async (req, res) => {
   try {    
     const jobToDelete = await model().findById(req.params.id).populate('companyId').exec();
-    if(!jobToDelete || jobToDelete.length == 0){
+    if(!jobToDelete){
       return res.status(400).json({ message: 'Job does not exist'});
     }
-    const company = await companyModel().findById(jobToDelete[0].companyId).populate('ownerId').exec();
+    const company = await companyModel().findById(jobToDelete.companyId).populate('ownerId').exec();
     if(company.ownerId.passport_user_id != req.session.user.id){
       return res.status(400).json({ message: 'Unauthorized: you must be the owner of the company associated with a job inorder to delte it'});
     }
