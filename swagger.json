@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Users API",
-    "description": "An API for managing your users",
+    "title": "Job Site API",
+    "description": "An API for a job site that allows users to create companies with one or more jobs. Users can apply to jobs. Companies can view and accept or reject applicants for their jobs.",
     "version": "1.0.0"
   },
   "host": "cse-341-final-yegu.onrender.com",
@@ -534,7 +534,7 @@
     "/application/": {
       "get": {
         "tags": ["Applications Endpoint"],
-        "description": "gets all of your applications and all applications for all jobs under your company(must be company owner or user)",
+        "description": "Gets all of your applications and all applications for all jobs under your company(must be company owner or user)",
         "responses": {
           "200": {
             "description": "OK",
@@ -802,5 +802,23 @@
         }
       }
     }
-  }
+  },
+  "tags":[
+    {
+      "name": "Users Endpoint",
+      "description": "Users can be marked as Admin or User. Users are automatically created when they login with Passport. Although users are created automatically, they can be updated and deleted. For example you may want to add a phone number or resume to your user after it is created. You can only modify your own user."
+    },
+    {
+      "name": "Company Endpoint",
+      "description": "The company endpoint allows users to create, update, delete companies and view companies. Companies can only be updated or deleted by the user who created them."
+    },
+    {
+      "name": "Jobs Endpoint",
+      "description": "The jobs endpoint allows users to create, update, delete jobs and view jobs. Jobs can only be updated or deleted by the user who created them."
+    },
+    {
+      "name": "Applications Endpoint",
+      "description": "The applications endpoint allows users to create, update, delete applications and view applications. Applications can be filtered by status or by job ID. Applications can only be update by the owners of the jobs they were created for. Applications can only be delete by the user who created them."
+    }
+  ]
 }
